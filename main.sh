@@ -15,3 +15,25 @@
 # - libexporter-tiny-perl  liblist-moreutils-perl  liblist-moreutils-xs-perl  libregexp-assemble-perl
 # - libntirpc-dev libntirpc3.5 liburcu8
 
+# Function to display a custom message
+show_message() {
+    echo -e "[`date +%H:%M`] ⬤ \t $1"
+}
+
+# Function to handle errors and display an error message
+handle_error() {
+  show_message "Error: $1"
+  exit 1
+}
+
+echo
+
+# Read the home directory of non-root user
+read -p "Enter the home directory of non-root user: " HOME_DIR
+
+show_message "Creating 'snort_src' directory in $HOME_DIR"
+
+# Create snort_src directory in the home directory of non-root user
+mkdir -p ${HOME_DIR}/snort_src 2>/dev/null || handle_error "Unable to create snort_src directory in $HOME_DIR"
+
+show_message "Created 'snort_src' directory successfully!"
