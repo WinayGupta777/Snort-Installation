@@ -131,4 +131,18 @@ line_break "Step 5: Extracting DAQ package"
 tar -xzf daq-2.0.7.tar.gz 2>/dev/null || handle_error "Failed to extract DAQ package :("
 show_message "Success: DAQ package extracted successfully!"
 
+# Installing DAQ package
+
+line_break "Step 6: Installing DAQ package"
+
+cd daq-2.0.7
+
+./configure 2>/dev/null || handle_error "Failed to configure DAQ package :("
+make 2>/dev/null || handle_error "Failed to make DAQ package :("
+make install 2>/dev/null || handle_error "Failed to install DAQ package :("
+
+show_message "Success: DAQ 'configure' successfully executed!"
+show_message "Success: DAQ 'make' successfully executed!"
+show_message "Success: DAQ 'make install' successfully executed!"
+
 # -----
