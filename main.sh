@@ -67,6 +67,15 @@ show_message "Success: 'snort_src' directory created successfully!"
 
 # -----
 
+# Check internet connection
+
+line_break "Step 2: Checking internet connection"
+
+wget -q --spider http://google.com || handle_error "No internet connection :("
+show_message "Success: Internet connection established!"
+
+# -----
+
 # Installing dependencies
 
 line_break "Step 2: Dependencies installation"
