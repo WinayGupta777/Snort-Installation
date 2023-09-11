@@ -30,7 +30,7 @@ then
   "
   exit 1
 else
-  echo -e "------------ Activating script ------------"
+  echo -e "\n------------ Activating script ------------\n"
 fi
 
 # Function for displaying header in console
@@ -46,6 +46,10 @@ show_message() {
 # Function to handle errors and display an error message
 handle_error() {
   show_message "Error: $1"
+  end_time=$(date +%s%N)
+  elapsed_time=$(( (end_time - start_time) / 1000000000 ))
+
+  echo -e "\n Total execution time: $elapsed_time seconds"
   exit 1
 }
 
@@ -53,6 +57,8 @@ handle_error() {
 
 # Read the home directory of non-root user
 read -p "Enter the home directory of non-root user [e.g. /home/vboxuser]: " HOME_DIR
+
+start_time=$(date +%s%N)
 
 line_break "Step 1: Directory creation"
 
@@ -112,6 +118,9 @@ show_message "Success: 'libexporter-tiny-perl'  'liblist-moreutils-perl'  'libli
 
 apt-get install -qq libntirpc-dev libntirpc3.5 liburcu8 >  /dev/null  2>&1 || handle_error "Failed to install :("
 show_message "Success: 'libntirpc-dev'  'libntirpc3.5'  'liburcu8' installed successfully!"
+
+apt-get install -qq libnghttp2-dev >  /dev/null  2>&1 || handle_error "Failed to install :("
+show_message "Success: 'libnghttp2-dev' installed successfully!"
 
 # -----
 
@@ -175,7 +184,9 @@ cd snort-2.9.20
 cp /usr/include/ntirpc/rpc/*  /usr/include/rpc/
 cp /usr/include/ntirpc/misc/*  /usr/include/misc/
 cp /usr/include/ntirpc/netconfig.h  /usr/include/
+cp /usr/include/ntirpc/intrinsic.h  /usr/include/
 cp /usr/include/ntirpc/reentrant.h /usr/include/
+ldconfig -v /usr/local/lib
 
 make 2>/dev/null || handle_error "Failed to make Snort package :("
 make install 2>/dev/null || handle_error "Failed to install Snort package :("
@@ -185,3 +196,10 @@ show_message "Success: Snort 'make' successfully executed!"
 show_message "Success: Snort 'make install' successfully executed!"
 
 # -----
+
+# Calculating total execution time
+
+end_time=$(date +%s%N)
+elapsed_time=$(( (end_time - start_time) / 1000000000 ))
+
+echo -e "\n Total execution time: $elapsed_time seconds"
