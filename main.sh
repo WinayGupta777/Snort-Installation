@@ -54,9 +54,14 @@ echo
 # Read the home directory of non-root user
 read -p "Enter the home directory of non-root user [e.g. /home/vboxuser]: " HOME_DIR
 
-show_message "Creating 'snort_src' directory in $HOME_DIR"
+line_break "Step 1: Directory creation"
+
+show_message "Creating directory: $HOME_DIR/snort_src"
+
+# Remove directory if it already exists
+rm -rf ${HOME_DIR}/snort_src 2>/dev/null
 
 # Create snort_src directory in the home directory of non-root user
-mkdir -p ${HOME_DIR}/snort_src 2>/dev/null || handle_error "Unable to create snort_src directory in $HOME_DIR"
+mkdir  ${HOME_DIR}/snort_src 2>/dev/null || handle_error "Unable to create directory: $HOME_DIR/snort_src"
 
-show_message "Created 'snort_src' directory successfully!"
+show_message "Success: 'snort_src' directory created successfully!"
