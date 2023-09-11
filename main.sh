@@ -30,8 +30,13 @@ then
   "
   exit 1
 else
-  echo -e "\n Activating script \n"
+  echo -e "------------ Activating script ------------"
 fi
+
+# Function for displaying header in console
+line_break() {
+  echo -e "\n------------ $1 "------------
+}
 
 # Function to display a custom message
 show_message() {
@@ -47,7 +52,7 @@ handle_error() {
 echo
 
 # Read the home directory of non-root user
-read -p "Enter the home directory of non-root user: " HOME_DIR
+read -p "Enter the home directory of non-root user [e.g. /home/vboxuser]: " HOME_DIR
 
 show_message "Creating 'snort_src' directory in $HOME_DIR"
 
