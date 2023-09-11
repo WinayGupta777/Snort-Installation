@@ -78,7 +78,7 @@ show_message "Success: Internet connection established!"
 
 # Installing dependencies
 
-line_break "Step 2: Dependencies installation"
+line_break "Step 3: Dependencies installation"
 
 apt-get remove -qq build-essential >  /dev/null  2>&1 || handle_error "Failed to install 'build-essential' :("
 show_message "Success: 'build-essential' installed successfully!"
@@ -112,3 +112,23 @@ show_message "Success: 'libexporter-tiny-perl'  'liblist-moreutils-perl'  'libli
 
 apt-get remove -qq libntirpc-dev libntirpc3.5 liburcu8 >  /dev/null  2>&1 || handle_error "Failed to install :("
 show_message "Success: 'libntirpc-dev'  'libntirpc3.5'  'liburcu8' installed successfully!"
+
+# -----
+
+# Downloading DAQ package
+
+line_break "Step 4: Downloading DAQ package"
+
+cd ${HOME_DIR}/snort_src
+
+wget --no-verbose --no-check-certificate https://www.snort.org/downloads/snort/daq-2.0.7.tar.gz 2>/dev/null || handle_error "Failed to download DAQ package :("
+show_message "Success: DAQ package downloaded successfully!"
+
+# Extracting DAQ package
+
+line_break "Step 5: Extracting DAQ package"
+
+tar -xzf daq-2.0.7.tar.gz 2>/dev/null || handle_error "Failed to extract DAQ package :("
+show_message "Success: DAQ package extracted successfully!"
+
+# -----
