@@ -15,6 +15,24 @@
 # - libexporter-tiny-perl  liblist-moreutils-perl  liblist-moreutils-xs-perl  libregexp-assemble-perl
 # - libntirpc-dev libntirpc3.5 liburcu8
 
+# This script must be executed as root user.
+if [ `whoami` != "root" ]
+then
+  echo "
+
+   ----------------------------
+  |                            |
+  |   Non-root user detected   |
+  |                            |
+   ----------------------------
+
+   Please switch to root user.
+  "
+  exit 1
+else
+  echo -e "\n Activating script \n"
+fi
+
 # Function to display a custom message
 show_message() {
     echo -e "[`date +%H:%M`] ⬤ \t $1"
