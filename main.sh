@@ -146,3 +146,42 @@ show_message "Success: DAQ 'make' successfully executed!"
 show_message "Success: DAQ 'make install' successfully executed!"
 
 # -----
+
+# Downloading Snort package
+
+line_break "Step 7: Downloading Snort package"
+
+cd ${HOME_DIR}/snort_src
+
+wget --no-verbose --no-check-certificate https://www.snort.org/downloads/snort/snort-2.9.20.tar.gz 2>/dev/null || handle_error "Failed to download Snort package :("
+show_message "Success: Snort package downloaded successfully!"
+
+# Extracting Snort package
+
+line_break "Step 8: Extracting Snort package"
+
+tar -xzf snort-2.9.20.tar.gz 2>/dev/null || handle_error "Failed to extract Snort package :("
+show_message "Success: Snort package extracted successfully!"
+
+# Installing Snort package
+
+line_break "Step 9: Installing Snort package"
+
+cd snort-2.9.20
+
+./configure --enable-sourcefire 2>/dev/null || handle_error "Failed to configure Snort package :("
+
+# Coping required files to /usr/include
+cp /usr/include/ntirpc/rpc/*  /usr/include/rpc/
+cp /usr/include/ntirpc/misc/*  /usr/include/misc/
+cp /usr/include/ntirpc/netconfig.h  /usr/include/
+cp /usr/include/ntirpc/reentrant.h /usr/include/
+
+make 2>/dev/null || handle_error "Failed to make Snort package :("
+make install 2>/dev/null || handle_error "Failed to install Snort package :("
+
+show_message "Success: Snort 'configure' successfully executed!"
+show_message "Success: Snort 'make' successfully executed!"
+show_message "Success: Snort 'make install' successfully executed!"
+
+# -----
