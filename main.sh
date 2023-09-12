@@ -197,9 +197,60 @@ show_message "Success: Snort 'make install' successfully executed!"
 
 # -----
 
+# Create Snort directories
+
+line_break "Step 10: Creating Snort directories"
+
+mkdir -p /etc/snort
+mkdir -p /etc/snort/rules
+mkdir -p /etc/snort/rules/iplists
+mkdir -p /etc/snort/preproc_rules
+mkdir -p /usr/local/lib/snort_dynamicrules
+mkdir -p /etc/snort/so_rules
+mkdir -p /var/log/snort
+mkdir -p /var/log/snort/archived_logs
+touch /etc/snort/rules/iplists/black_list.rules
+touch /etc/snort/rules/iplists/white_list.rules
+touch /etc/snort/rules/local.rules
+touch /etc/snort/sid-msg.map
+
+show_message "Success: Snort directories created successfully!"
+
+# -----
+
+# Copying Snort configuration files
+
+line_break "Step 11: Copying Snort configuration files"
+
+cd ${HOME_DIR}/snort_src/snort-2.9.20/etc
+cp *.conf* /etc/snort
+cp *.map /etc/snort
+cp *.dtd /etc/snort
+
+cd ${HOME_DIR}/snort_src/snort-2.9.20/src/dynamic-preprocessors/build/usr/local/lib/snort_dynamicpreprocessor
+cp * /usr/local/lib/snort_dynamicpreprocessor/
+
+show_message "Success: Snort configuration files copied successfully!"
+
+# -----
+
+# Modifying Snort configuration files
+
+line_break "Step 12: Modifying Snort configuration files"
+
+sed -i 's|var RULE_PATH ../rules|var RULE_PATH /etc/snort/rules|; s|var SO_RULE_PATH ../so_rules|var SO_RULE_PATH /etc/snort/so_rules|; s|var PREPROC_RULE_PATH ../preproc_rules|var PREPROC_RULE_PATH /etc/snort/preproc_rules|; s|var WHITE_LIST_PATH ../rules|var WHITE_LIST_PATH /etc/snort/rules|; s|var BLACK_LIST_PATH ../rules|var BLACK_LIST_PATH /etc/snort/rules|' /etc/snort/snort.conf
+
+sed -i 's|include $RULE_PATH|#include $RULE_PATH|' /etc/snort/snort.conf
+
+sed -i 's|#include $RULE_PATH/local.rules|include $RULE_PATH/local.rules|' /etc/snort/snort.conf
+
+show_message "Success: Snort configuration files modified successfully!"
+
+# -----
+
 # Calculating total execution time
 
 end_time=$(date +%s%N)
 elapsed_time=$(( (end_time - start_time) / 1000000000 ))
 
-echo -e "\n Total execution time: $elapsed_time seconds"
+show_message "Total execution time: $elapsed_time seconds"
